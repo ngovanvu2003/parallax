@@ -9,23 +9,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
-  width: 100%;
-  height: 100%;
+  width: 100vw; /* Chiếm toàn bộ chiều rộng của viewport */
+  height: 20vh; /* Chiếm toàn bộ chiều cao của viewport */
+  overflow: hidden; /* Ẩn nội dung thừa */
 }
 
 .animated-banner .layer {
-  position: absolute;
+  position: absolute; /* Đặt các lớp chồng lên nhau */
   left: 0;
   top: 0;
-  height: 100%;
-  width: 100%;
+  width: 100%; /* Đặt chiều rộng thành 100% */
+  height: 100%; /* Đặt chiều cao thành 100% */
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: none;
 }
 
+.animated-banner .layer video,
 .animated-banner .layer img {
-  object-fit: cover;
+  object-fit: cover; /* Đảm bảo video/hình ảnh chiếm toàn bộ không gian */
+  width: 100%; /* Đặt chiều rộng thành 100% */
+  height: 100%; /* Đặt chiều cao thành 100% */
 }
