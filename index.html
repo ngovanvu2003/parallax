@@ -363,18 +363,33 @@
     <script>
       const banner = document.querySelector(".animated-banner");
       const layers = document.querySelectorAll(".layer");
+      let animationFrame;
 
+      // Sự kiện di chuột
       banner.addEventListener("mousemove", (e) => {
-        const { clientX } = e; // Lấy vị trí chuột theo chiều ngang
-        const { offsetWidth: width } = banner; // Chiều rộng của banner
+        cancelAnimationFrame(animationFrame); // Hủy frame trước đó
+        animationFrame = requestAnimationFrame(() => {
+          const xPos = (e.clientX / banner.offsetWidth - 0.5) * 12; // Điều chỉnh độ nhạy
+          layers.forEach((layer, index) => {
+            const movement = xPos * (index + 1);
+            layer.style.transition = "transform 0.0s";
+            layer.style.transform = `translate(${movement}px, 0)`; // Dịch chuyển nhanh
+          });
+        });
+      });
 
-        // Tính toán tỷ lệ phần trăm vị trí chuột
-        const xPos = clientX / width - 0.5; // Giá trị từ -0.5 đến 0.5
+      // Sự kiện chuột rời khỏi khu vực banner
+      banner.addEventListener("mouseleave", () => {
+        layers.forEach((layer) => {
+          layer.style.transition = "transform 0.5s ease"; // Thiết lập lại transition cho việc trở về
+          layer.style.transform = "translate(0, 0)"; // Về vị trí ban đầu
+        });
+      });
 
-        layers.forEach((layer, index) => {
-          const movement = (index + 1) * 10; // Điều chỉnh độ nhạy cho mỗi lớp
-          const translateX = xPos * movement; // Dịch chuyển trái/phải
-          layer.style.transform = `translate(${translateX}px, 0)`; // Chỉ dịch chuyển theo trục X
+      // Thêm sự kiện để xóa transition sau khi trở về
+      layers.forEach((layer) => {
+        layer.addEventListener("transitionend", () => {
+          layer.style.transition = "none"; // Xóa transition sau khi trở về
         });
       });
     </script>

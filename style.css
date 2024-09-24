@@ -10,24 +10,40 @@
   justify-content: center;
   align-items: center;
   width: 100vw; /* Chiếm toàn bộ chiều rộng của viewport */
-  height: 20vh; /* Chiếm toàn bộ chiều cao của viewport */
+  height: 20vh; /* Đặt chiều cao theo tỷ lệ với chiều cao viewport */
   overflow: hidden; /* Ẩn nội dung thừa */
 }
 
+@keyframes moveLayer {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(var(--translate-x), 0);
+  }
+}
+
 .animated-banner .layer {
-  position: absolute; /* Đặt các lớp chồng lên nhau */
+  position: absolute;
   left: 0;
   top: 0;
-  width: 100%; /* Đặt chiều rộng thành 100% */
-  height: 100%; /* Đặt chiều cao thành 100% */
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.5s ease; /* Hiệu ứng chuyển động mượt mà */
 }
 
 .animated-banner .layer video,
 .animated-banner .layer img {
-  object-fit: cover; /* Đảm bảo video/hình ảnh chiếm toàn bộ không gian */
-  width: 100%; /* Đặt chiều rộng thành 100% */
-  height: 100%; /* Đặt chiều cao thành 100% */
+  object-fit: contain; /* Giữ tỷ lệ khung hình mà không cắt */
+  width: 100%; /* Chiếm toàn bộ chiều rộng */
+  height: 100%; /* Chiếm toàn bộ chiều cao */
+}
+
+@media (max-width: 768px) {
+  .animated-banner {
+    height: 40vh; /* Giảm chiều cao trên màn hình nhỏ */
+  }
 }
